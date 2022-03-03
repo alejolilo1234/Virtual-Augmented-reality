@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Virtual & Augmented reality</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <!-- A-Frame extras - Animation mixer -->
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <!-- AFrame Environment Component -->
+    <script src="https://unpkg.com/aframe-environment-component@1.3.1/dist/aframe-environment-component.min.js"></script>
+    <!-- Custom components -->
+    <script src="components.js"></script>
+  </head>
+  <body>
+    <a-scene vr-mode-ui='enabled: false;'>
+      
+      <!-- Assets for Scene -->
+      <a-assets>
+        
+          <!-- Trump asset -->
+          <a-asset-item 
+            id='trump' 
+            src='assets/graphics/trump/scene.gltf'
+            
+          ></a-asset-item>
+        
+          <!-- Arrow asset -->
+          <a-asset-item 
+            id='arrow' 
+            src='assets/graphics/arrow/scene.gltf'
+            
+          ></a-asset-item>
+        
+        </a-assets>
+      
+      <!-- Scene Number One -->
+      <a-entity position='0 0 0'>
+
+        <!-- Spot light -->
+        <a-entity 
+          light='type: spot; color: #fff; penumbra: 0.5; target: #sceneEnvironment'
+          position='0 3 0'
+        ></a-entity>
+
+        <!-- Controls for slide -->
+        <a-entity position='0 1.6 0'>
+          
+          <a-entity 
+            id='leftArrow'
+            rotation='0 0 180'
+            position='-3 0 0'
+            gltf-model='#arrow'
+            scale='1 1 1'
+            class='clickable'
+          ></a-entity>
+          
+          <a-entity
+            id='rightArrow'
+            gltf-model='#arrow'
+            scale='1 1 1'
+            class='clickable'
+            position='3 0 0'
+          ></a-entity>
+          
+        </a-entity>
+        
+        <!-- Dynamic content -->
+        <a-entity id='dynamicContent'>
+
+          <!-- Dynamic content here -->
+          
+        </a-entity>
+
+        <!-- Sound -->
+        <a-sound 
+          id='FinalSound'
+          position='0 1.6 0' 
+          src="src: url(/assets/sounds/Example - Kickstarts.mp3)"  
+          position="0 2 5" 
+          loop='true'
+        ></a-sound>
+        
+        <!-- Floor -->
+        <a-entity 
+          id='sceneEnvironment'
+          environment="preset: egypt"
+        ></a-entity>
+        
+        
+      </a-entity>
+
+      <!-- Custom camera -->
+      <a-entity id='rig'>
+        
+        <a-entity 
+          camera
+          position='0 1.6 2'
+          look-controls='pointerLockEnabled: true;'
+          id='mainCamera'
+        >
+          <a-cursor
+            animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
+            animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
+            animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 500; to: 1 1 1"
+            material="color: black; shader: flat"
+            opacity='.5'
+            fuse='true'
+            raycaster='objects: .clickable'
+          ></a-cursor>
+        </a-entity>
+  
+        <!-- Lights -->
+        <a-entity 
+          light='type: directional; color: #fff;'
+          position='0 5 6'
+        ></a-entity>
+        
+      </a-entity>
+      
+    </a-scene>
+    <script src="script.js"></script>
+  </body>
+</html>
